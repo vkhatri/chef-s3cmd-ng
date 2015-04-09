@@ -1,0 +1,11 @@
+default['s3cmd']['setup_epel'] = true
+default['s3cmd']['user'] = 'root'
+default['s3cmd']['group'] = 'root'
+default['s3cmd']['mode'] = '0750'
+default['s3cmd']['umask'] = '0027'
+default['s3cmd']['manage_sync_dir'] = true
+default['s3cmd']['template_source'] = 's3cfg.conf.erb'
+default['s3cmd']['template_cookbook'] = 's3cmd-ng'
+default['s3cmd']['file'] = nil
+default['s3cmd']['download_dir'] = '/tmp'
+default['s3cmd']['binary'] = '/usr/bin/s3cmd'
