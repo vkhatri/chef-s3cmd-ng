@@ -23,7 +23,7 @@ when 'debian'
   include_recipe 'apt'
 when 'rhel'
   packages = %w(s3cmd)
-  include_recipe 'yum-epel' if node['platform'] != 'amazon' && node['s3cmd']['setup_epel']
+  include_recipe 'yum-epel' if node['s3cmd']['setup_epel']
 end
 
 # dependencies
