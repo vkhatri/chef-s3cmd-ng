@@ -30,9 +30,16 @@ def s3_file_path
 end
 
 action :create do
-  # file_name = new_resource.s3_url.split('/').reverse[0]
-  fail "directory #{new_resource.download_dir} does not exists" unless ::File.exist?(new_resource.download_dir)
-  # file_download_path = ::File.join(new_resource.download_dir, file_name)
+  fail "s3 config file missing - #{new_resource.s3cfg_file}" ::File.exist?(new_resource.s3cfg_file) if new_resource.s3cfg_file
+  fail "directory #{new_resource.download_dir} does not exists" unless new_resource.manage_download_dir && ::File.exist?(new_resource.download_dir)
+
+  directory "syncdir_#{new_resource.download_dir}" do
+    path new_resource.download_dir
+    user new_resource.user
+    group new_resource.group
+    mode new_resource.mode
+    only_if { new_resource.manage_download_dir }
+  end
 
   f = execute "s3file_#{s3_file_path}" do
     cwd new_resource.download_dir
@@ -40,7 +47,7 @@ action :create do
     group new_resource.group
     umask new_resource.umask
     command "#{new_resource.s3_binary} get #{new_resource.s3_url} --config #{new_resource.s3cfg_file} #{new_resource.s3cmd_options}"
-    creates s3_file_path unless new_resource.force
+    creates s3_file_path
     notifies :run, "execute[extract_s3_file_#{new_resource.name}]", :immediately if new_resource.extract
   end
 
@@ -50,7 +57,6 @@ action :create do
     umask new_resource.umask
     cwd new_resource.download_dir
     command "tar -xzf #{s3_file_name} -C #{new_resource.extract_dir}"
-    creates ::File.join(new_resource.extract_dir, new_resource.verify_file) if new_resource.verify_file
     # extract only if extract directory is specified
     only_if { new_resource.extract }
     action :nothing
@@ -67,6 +73,7 @@ action :delete do
   d = directory "extract_#{new_resource.extract_dir}" do
     path new_resource.extract_dir
     action :delete
+    only_if { new_resource.extract_dir }
   end
   new_resource.updated_by_last_action(true) if f.updated? || d.updated?
 end

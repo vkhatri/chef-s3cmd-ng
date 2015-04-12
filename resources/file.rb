@@ -23,16 +23,14 @@ actions :create, :delete
 
 default_action :create
 
-attribute :s3cfg_file,        :kind_of => String, :required => true, :default => nil
+attribute :s3cfg_file,        :kind_of => String, :default => nil
 attribute :s3_url,            :kind_of => String, :required => true, :default => nil
 attribute :s3cmd_options,     :kind_of => String, :default => nil
 attribute :download_dir,      :kind_of => String, :default => node['s3cmd']['download_dir']
 attribute :extract_dir,       :kind_of => String, :default => nil
-attribute :verify_file,       :kind_of => String, :default => nil
 attribute :user,              :kind_of => String, :default => node['s3cmd']['user']
 attribute :group,             :kind_of => String, :default => node['s3cmd']['group']
 attribute :umask,             :kind_of => [String, Integer], :default => node['s3cmd']['umask']
 attribute :mode,              :kind_of => [String, Integer], :default => node['s3cmd']['mode']
 attribute :extract,           :kind_of => [TrueClass, FalseClass], :default => false
-attribute :force,             :kind_of => [TrueClass, FalseClass], :default => false
 attribute :s3_binary,         :kind_of => String, :default => node['s3cmd']['binary']
