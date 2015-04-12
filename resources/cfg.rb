@@ -27,12 +27,12 @@ attribute :file,            :kind_of => String, :default => node['s3cmd']['file'
 attribute :user,            :kind_of => String, :default => node['s3cmd']['user']
 attribute :group,           :kind_of => String, :default => node['s3cmd']['group']
 attribute :mode,            :kind_of => [String, Integer], :default => node['s3cmd']['mode']
-attribute :source,          :kind_of => String, :default => node['s3cmd']['template_source']
-attribute :cookbook,        :kind_of => String, :default => node['s3cmd']['template_cookbook']
+attribute :template_source,          :kind_of => String, :default => node['s3cmd']['template_source']
+attribute :template_cookbook,        :kind_of => String, :default => node['s3cmd']['template_cookbook']
 
-attribute :databag,         :kind_of => String, :default => nil
+attribute :databag,         :kind_of => String, :default => node['s3cmd']['databag']
 attribute :databag_item,    :kind_of => String, :default => nil
-attribute :databag_secret,  :kind_of => String, :default => nil
+attribute :databag_secret,  :kind_of => String, :default => node['s3cmd']['databag_secret']
 
 attribute :access_key, :kind_of => String, :default => node['s3cmd']['config']['access_key']
 attribute :access_token, :kind_of => String, :default => node['s3cmd']['config']['access_token']

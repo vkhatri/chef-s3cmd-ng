@@ -9,3 +9,5 @@ default['s3cmd']['template_cookbook'] = 's3cmd-ng'
 default['s3cmd']['file'] = nil
 default['s3cmd']['download_dir'] = '/tmp'
 default['s3cmd']['binary'] = '/usr/bin/s3cmd'
+default['s3cmd']['databag'] = 's3cmd'
+default['s3cmd']['databag_secret'] = nil

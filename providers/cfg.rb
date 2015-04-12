@@ -60,8 +60,8 @@ action :create do
 
   r = template s3cfg_file do
     path new_resource.file || s3cfg_file
-    source new_resource.source
-    cookbook new_resource.cookbook
+    source new_resource.template_source
+    cookbook new_resource.template_cookbook
     owner new_resource.user
     group new_resource.group
     mode new_resource.mode
